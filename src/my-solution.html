@@ -1,0 +1,35 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-solution">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+				padding: 10px;
+			}
+		</style>
+		
+		<div class="card"> 
+			<h1 align="center">Solution</h1>    
+			<iron-ajax 
+      url="http://0.0.0.0:5000/"
+      method="GET"
+      body=''
+      params=''
+      handle-as="json"
+      on-response="hresponse"
+      last-response="{{ajaxResponse}}"></iron-ajax>      
+			<h2 align="center">Error: Background must be a blackboard</h2>
+		</div>
+		
+	</template>
+
+	<script>
+		Polymer({
+			is: 'my-solution'
+		});
+
+		this.$.ajax.generateRequest();
+	</script>
+</dom-module>

@@ -1,0 +1,46 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/video-camera/video-camera.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-camera">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+    </style>
+
+    <div class="card">
+      <h1 align="center">Click anywhere on the image to take a picture</h1>
+      <video-camera  screenshot="{{screen}}" onClick="setajax"></video-camera>      
+      <iron-ajax 
+      url="http://0.0.0.0:5000/"
+      method="POST"
+      body=''
+      params=''
+      handle-as="json"
+      on-response="hresponse"
+      last-response="{{ajaxResponse}}"></iron-ajax>     
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'my-camera',
+
+      setajax: function() {
+        this.$.ajax.body='document.querySelector("video-camera").innerHTML.screenshot';
+        this.$.ajax.params= '{"codec":"video-camera.screenshot"}';
+        this.$.ajax.generateRequest();
+        
+      },
+      hresponse: function(request) {
+        console.log(request.detail.response);
+        console.log(this.$.ajax.lastResponse);
+        console.log(this.$.ajax.params);
+      }
+    });
+  </script>
+</dom-module>
